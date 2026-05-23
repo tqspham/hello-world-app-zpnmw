@@ -51,8 +51,9 @@ export default function ContactForm() {
       if (error) {
         return { ...prev, [field]: error };
       } else {
-        const { [field]: _, ...rest } = prev;
-        return rest;
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
       }
     });
   };
@@ -65,8 +66,9 @@ export default function ContactForm() {
     // Clear error for this field when user starts typing
     if (errors[name as keyof FormData]) {
       setErrors((prev) => {
-        const { [name]: _, ...rest } = prev;
-        return rest;
+        const newErrors = { ...prev };
+        delete newErrors[name as keyof FormData];
+        return newErrors;
       });
     }
   };
