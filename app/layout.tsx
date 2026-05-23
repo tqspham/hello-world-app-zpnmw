@@ -6,7 +6,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Hello World",
-  description: "A clean and approachable application",
+  description: "A clean, approachable application with contact form and helpful resources",
 };
 
 export default function RootLayout({

@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { href: "#pricing", label: "Pricing" },
   { href: "#documentation", label: "Documentation" },
   { href: "#help", label: "Help Center" },
-  { href: "#contact", label: "Contact" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Navigation() {
