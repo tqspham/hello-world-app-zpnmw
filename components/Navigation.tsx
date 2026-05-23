@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -18,7 +19,7 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-(--color-surface) border-b border-(--color-border) shadow-sm">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-(--color-surface) border-b border-(--color-border) shadow-sm transition-colors">
         <div className="mx-auto max-w-7xl px-6 py-4 sm:px-8 lg:px-10">
           <div className="flex items-center justify-between">
             {/* Logo/Brand */}
@@ -43,19 +44,18 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-(--color-primary) hover:text-(--color-secondary) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded"
-              aria-label="Toggle mobile menu"
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? (
-                <X size={24} />
-              ) : (
-                <Menu size={24} />
-              )}
-            </button>
+            {/* Theme Toggle and Mobile Menu Toggle */}
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-2 text-(--color-primary) hover:text-(--color-secondary) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded"
+                aria-label="Toggle mobile menu"
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -70,7 +70,7 @@ export default function Navigation() {
             aria-hidden="true"
           />
           {/* Menu panel */}
-          <div className="absolute top-16 left-0 right-0 bg-(--color-surface) shadow-lg animate-in fade-in duration-150">
+          <div className="absolute top-16 left-0 right-0 bg-(--color-surface) shadow-lg animate-in fade-in duration-150 transition-colors">
             <div className="mx-auto max-w-7xl px-6 py-6 sm:px-8 lg:px-10">
               <div className="flex flex-col gap-4">
                 {NAV_LINKS.map((link) => (

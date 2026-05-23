@@ -14,7 +14,22 @@
   --color-danger: #EF4444;
 }
 
+[data-theme="dark"] {
+  --color-background: #1a1a1a;
+  --color-surface: #2d2d2d;
+  --color-primary: #a8d5ba;
+  --color-secondary: #d4a574;
+  --color-accent: #f59e0b;
+  --color-text: #e5e5e5;
+  --color-muted-text: #a0a0a0;
+  --color-border: #404040;
+  --color-success: #6ee7b7;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
+}
+
 body {
   color: rgb(var(--color-text));
   background-color: rgb(var(--color-background));
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
