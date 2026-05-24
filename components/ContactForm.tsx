@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { AlertCircle, CheckCircle, Loader } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
+import { getTranslation } from "@/lib/translations";
 
 interface FormData {
   name: string;
@@ -19,7 +20,7 @@ interface ValidationErrors {
 }
 
 export default function ContactForm() {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -39,13 +40,11 @@ export default function ContactForm() {
 
   const validateField = (name: string, value: string): string | undefined => {
     if (!value.trim()) {
-      if (name === "name") return t("contact.form.nameRequired");
-      if (name === "email") return t("contact.form.emailRequired");
-      if (name === "subject") return t("contact.form.subjectRequired");
-      if (name === "message") return t("contact.form.messageRequired");
+      const fieldName = getTranslation(language, `contact.form${name.charAt(0).toUpperCase() + name.slice(1)}`);
+      return `${fieldName} ${getTranslation(language, "contact.validationRequired")}`;
     }
     if (name === "email" && !validateEmail(value)) {
-      return t("contact.form.emailInvalid");
+      return getTranslation(language, "contact.validationEmail");
     }
     return undefined;
   };
@@ -110,21 +109,20 @@ export default function ContactForm() {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        setSuccessMessage(
-          data.message || t("contact.form.successMessage")
-        );
+        const successMsg = getTranslation(language, "contact.successMessage");
+        setSuccessMessage(successMsg);
         setFormData({ name: "", email: "", subject: "", message: "" });
         setErrors({});
         if (liveRegionRef.current) {
           liveRegionRef.current.focus();
         }
       } else {
-        const data = await response.json();
-        setErrorMessage(data.error || t("contact.form.errorMessage"));
+        const errorMsg = getTranslation(language, "contact.errorMessage");
+        setErrorMessage(errorMsg);
       }
     } catch (error) {
-      setErrorMessage(t("contact.form.genericError"));
+      const errorMsg = getTranslation(language, "contact.errorMessage");
+      setErrorMessage(errorMsg);
     } finally {
       setIsSubmitting(false);
     }
@@ -153,7 +151,7 @@ export default function ContactForm() {
           />
           <div>
             <p className="text-(--color-primary) font-medium">
-              {t("contact.form.successTitle")}
+              {getTranslation(language, "contact.successTitle")}
             </p>
             <p className="text-(--color-muted-text) text-sm mt-1">
               {successMessage}
@@ -171,7 +169,7 @@ export default function ContactForm() {
           />
           <div>
             <p className="text-(--color-primary) font-medium">
-              {t("contact.form.errorTitle")}
+              {getTranslation(language, "contact.errorTitle")}
             </p>
             <p className="text-(--color-muted-text) text-sm mt-1">
               {errorMessage}
@@ -188,7 +186,7 @@ export default function ContactForm() {
             htmlFor="name"
             className="block text-(--color-primary) font-medium mb-2 transition-colors"
           >
-            {t("contact.form.nameLabel")}
+            {getTranslation(language, "contact.formName")}
           </label>
           <input
             id="name"
@@ -200,7 +198,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.name ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={t("contact.form.namePlaceholder")}
+            placeholder={getTranslation(language, "contact.formNamePlaceholder")}
             disabled={isSubmitting}
           />
           {errors.name && (
@@ -217,7 +215,7 @@ export default function ContactForm() {
             htmlFor="email"
             className="block text-(--color-primary) font-medium mb-2 transition-colors"
           >
-            {t("contact.form.emailLabel")}
+            {getTranslation(language, "contact.formEmail")}
           </label>
           <input
             id="email"
@@ -229,7 +227,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.email ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={t("contact.form.emailPlaceholder")}
+            placeholder={getTranslation(language, "contact.formEmailPlaceholder")}
             disabled={isSubmitting}
           />
           {errors.email && (
@@ -246,7 +244,7 @@ export default function ContactForm() {
             htmlFor="subject"
             className="block text-(--color-primary) font-medium mb-2 transition-colors"
           >
-            {t("contact.form.subjectLabel")}
+            {getTranslation(language, "contact.formSubject")}
           </label>
           <input
             id="subject"
@@ -258,7 +256,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.subject ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={t("contact.form.subjectPlaceholder")}
+            placeholder={getTranslation(language, "contact.formSubjectPlaceholder")}
             disabled={isSubmitting}
           />
           {errors.subject && (
@@ -275,7 +273,7 @@ export default function ContactForm() {
             htmlFor="message"
             className="block text-(--color-primary) font-medium mb-2 transition-colors"
           >
-            {t("contact.form.messageLabel")}
+            {getTranslation(language, "contact.formMessage")}
           </label>
           <textarea
             id="message"
@@ -286,7 +284,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 resize-none ${
               errors.message ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={t("contact.form.messagePlaceholder")}
+            placeholder={getTranslation(language, "contact.formMessagePlaceholder")}
             rows={6}
             disabled={isSubmitting}
           />
@@ -307,10 +305,10 @@ export default function ContactForm() {
           {isSubmitting ? (
             <>
               <Loader size={18} className="animate-spin" />
-              {t("contact.form.sending")}
+              {getTranslation(language, "contact.formSubmitSending")}
             </>
           ) : (
-            t("contact.form.submitButton")
+            getTranslation(language, "contact.formSubmit")
           )}
         </button>
       </form>

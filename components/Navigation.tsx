@@ -6,18 +6,19 @@ import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import LanguagePicker from "./LanguagePicker";
 import { useLanguage } from "@/lib/language-context";
+import { getTranslation } from "@/lib/translations";
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { t } = useLanguage();
+  const { language } = useLanguage();
 
-  const NAV_LINKS = [
-    { href: "/", labelKey: "nav.home" },
-    { href: "#features", labelKey: "nav.features" },
-    { href: "#pricing", labelKey: "nav.pricing" },
-    { href: "#documentation", labelKey: "nav.documentation" },
-    { href: "#help", labelKey: "nav.help" },
-    { href: "/contact", labelKey: "nav.contact" },
+  const navLinks = [
+    { href: "/", labelKey: "navigation.home" },
+    { href: "#features", labelKey: "navigation.features" },
+    { href: "#pricing", labelKey: "navigation.pricing" },
+    { href: "#documentation", labelKey: "navigation.documentation" },
+    { href: "#help", labelKey: "navigation.help" },
+    { href: "/contact", labelKey: "navigation.contact" },
   ];
 
   return (
@@ -30,24 +31,24 @@ export default function Navigation() {
               href="/"
               className="text-lg font-semibold text-(--color-primary) hover:text-(--color-secondary) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded px-2 py-1"
             >
-              {t("nav.brand")}
+              Hello World
             </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
-              {NAV_LINKS.map((link) => (
+              {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   className="text-sm text-(--color-primary) hover:text-(--color-secondary) transition-colors relative group focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded px-2 py-1"
                 >
-                  {t(link.labelKey)}
+                  {getTranslation(language, link.labelKey)}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-(--color-secondary) group-hover:w-full transition-all duration-200 ease-in-out"></span>
                 </Link>
               ))}
             </div>
 
-            {/* Theme Toggle, Language Picker and Mobile Menu Toggle */}
+            {/* Theme Toggle, Language Picker, and Mobile Menu Toggle */}
             <div className="flex items-center gap-4">
               <LanguagePicker />
               <ThemeToggle />
@@ -77,14 +78,14 @@ export default function Navigation() {
           <div className="absolute top-16 left-0 right-0 bg-(--color-surface) shadow-lg animate-in fade-in duration-150 transition-colors">
             <div className="mx-auto max-w-7xl px-6 py-6 sm:px-8 lg:px-10">
               <div className="flex flex-col gap-4">
-                {NAV_LINKS.map((link) => (
+                {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     className="text-sm text-(--color-primary) hover:text-(--color-secondary) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded px-2 py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {t(link.labelKey)}
+                    {getTranslation(language, link.labelKey)}
                   </Link>
                 ))}
               </div>
