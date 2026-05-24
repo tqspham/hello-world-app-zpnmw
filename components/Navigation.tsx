@@ -3,23 +3,21 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { useLanguage } from "@/lib/language-context";
-import { getTranslation } from "@/lib/translations";
 import ThemeToggle from "./ThemeToggle";
 import LanguagePicker from "./LanguagePicker";
+import { useLanguage } from "@/lib/language-context";
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { language } = useLanguage();
-  const translations = getTranslation(language);
+  const { t } = useLanguage();
 
   const NAV_LINKS = [
-    { href: "/", label: translations.navigation.home },
-    { href: "#features", label: translations.navigation.features },
-    { href: "#pricing", label: translations.navigation.pricing },
-    { href: "#documentation", label: translations.navigation.documentation },
-    { href: "#help", label: translations.navigation.help },
-    { href: "/contact", label: translations.navigation.contact },
+    { href: "/", labelKey: "nav.home" },
+    { href: "#features", labelKey: "nav.features" },
+    { href: "#pricing", labelKey: "nav.pricing" },
+    { href: "#documentation", labelKey: "nav.documentation" },
+    { href: "#help", labelKey: "nav.help" },
+    { href: "/contact", labelKey: "nav.contact" },
   ];
 
   return (
@@ -32,7 +30,7 @@ export default function Navigation() {
               href="/"
               className="text-lg font-semibold text-(--color-primary) hover:text-(--color-secondary) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded px-2 py-1"
             >
-              Hello World
+              {t("nav.brand")}
             </Link>
 
             {/* Desktop Navigation */}
@@ -43,16 +41,16 @@ export default function Navigation() {
                   href={link.href}
                   className="text-sm text-(--color-primary) hover:text-(--color-secondary) transition-colors relative group focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded px-2 py-1"
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-(--color-secondary) group-hover:w-full transition-all duration-200 ease-in-out"></span>
                 </Link>
               ))}
             </div>
 
-            {/* Theme Toggle, Language Picker, and Mobile Menu Toggle */}
+            {/* Theme Toggle, Language Picker and Mobile Menu Toggle */}
             <div className="flex items-center gap-4">
-              <ThemeToggle />
               <LanguagePicker />
+              <ThemeToggle />
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="md:hidden p-2 text-(--color-primary) hover:text-(--color-secondary) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded"
@@ -86,7 +84,7 @@ export default function Navigation() {
                     className="text-sm text-(--color-primary) hover:text-(--color-secondary) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded px-2 py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 ))}
               </div>
