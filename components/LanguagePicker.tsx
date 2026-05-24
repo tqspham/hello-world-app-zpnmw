@@ -11,11 +11,12 @@ export default function LanguagePicker() {
   const languages = [
     { code: "en", label: "English" },
     { code: "vi", label: "Tiếng Việt" },
+    { code: "fr", label: "Français" },
   ];
 
   const currentLanguage = languages.find((lang) => lang.code === language);
 
-  const handleSelectLanguage = (code: "en" | "vi") => {
+  const handleSelectLanguage = (code: "en" | "vi" | "fr") => {
     setLanguage(code);
     setIsOpen(false);
   };
@@ -42,7 +43,7 @@ export default function LanguagePicker() {
           {languages.map((lang) => (
             <button
               key={lang.code}
-              onClick={() => handleSelectLanguage(lang.code as "en" | "vi")}
+              onClick={() => handleSelectLanguage(lang.code as "en" | "vi" | "fr")}
               className={`w-full text-left px-4 py-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-inset ${
                 language === lang.code
                   ? "bg-(--color-accent) text-(--color-surface) font-medium"

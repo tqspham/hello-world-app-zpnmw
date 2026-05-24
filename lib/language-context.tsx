@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-type Language = "en" | "vi";
+type Language = "en" | "vi" | "fr";
 
 interface LanguageContextType {
   language: Language;
@@ -286,6 +286,121 @@ const translations: Record<Language, Record<string, any>> = {
             feature3: "Lưu trữ không giới hạn",
             feature4: "Tích hợp tùy chỉnh",
             feature5: "Đảm bảo SLA",
+          },
+        },
+      },
+    },
+  },
+  fr: {
+    nav: {
+      home: "Accueil",
+      features: "Fonctionnalités",
+      pricing: "Tarification",
+      documentation: "Documentation",
+      help: "Centre d'Aide",
+      contact: "Contact",
+      brand: "Hello World",
+    },
+    footer: {
+      company: "Entreprise",
+      companyDescription:
+        "Une interface propre et accessible avec un ton chaleureux et convivial qui privilégie la clarté et la simplicité.",
+      product: "Produit",
+      features: "Fonctionnalités",
+      pricing: "Tarification",
+      documentation: "Documentation",
+      support: "Support",
+      helpCenter: "Centre d'Aide",
+      contactUs: "Contact",
+      status: "Statut",
+      legal: "Juridique",
+      privacy: "Politique de Confidentialité",
+      terms: "Conditions d'Utilisation",
+      cookies: "Cookies",
+      copyright: "© 2024 Hello World. Tous droits réservés.",
+      twitter: "Twitter",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+    },
+    home: {
+      title: "Hello World",
+      metaTitle: "Accueil - Hello World",
+      metaDescription: "Une application propre et accessible créée avec Next.js",
+    },
+    contact: {
+      heading: "Nous Contacter",
+      description:
+        "Nous serions ravis d'avoir de vos nouvelles. Envoyez-nous un message et nous vous répondrons dès que possible.",
+      metaTitle: "Contact - Hello World",
+      metaDescription: "Contactez-nous. Nous serions ravis d'avoir de vos nouvelles.",
+      form: {
+        nameLabel: "Nom",
+        namePlaceholder: "Votre nom",
+        nameRequired: "Le nom est requis",
+        emailLabel: "Email",
+        emailPlaceholder: "votre.email@example.com",
+        emailRequired: "L'email est requis",
+        emailInvalid: "Veuillez entrer une adresse email valide",
+        subjectLabel: "Sujet",
+        subjectPlaceholder: "De quoi s'agit-il ?",
+        subjectRequired: "Le sujet est requis",
+        messageLabel: "Message",
+        messagePlaceholder: "Veuillez nous en dire plus...",
+        messageRequired: "Le message est requis",
+        submitButton: "Envoyer le Message",
+        sending: "Envoi en cours...",
+        successTitle: "Message Envoyé",
+        successMessage: "Merci de nous avoir contactés. Nous vous répondrons bientôt.",
+        errorTitle: "Erreur",
+        errorMessage: "Impossible d'envoyer le message. Veuillez réessayer.",
+        genericError: "Une erreur s'est produite. Veuillez réessayer.",
+      },
+    },
+    pricing: {
+      heading: "Tarification Simple et Transparente",
+      description:
+        "Choisissez le plan parfait pour vos besoins. Toujours flexible pour monter ou descendre en charge.",
+      recommended: "Recommandé",
+      featuresIncluded: "Ce qui est inclus :",
+      faq: "Des questions ? Contactez notre équipe commerciale pour des solutions d'entreprise personnalisées.",
+      plans: {
+        starter: {
+          name: "Démarrage",
+          price: "29",
+          billingPeriod: "par mois",
+          description: "Parfait pour commencer",
+          cta: "Commencer",
+          features: {
+            feature1: "Jusqu'à 10 projets",
+            feature2: "Support de base",
+            feature3: "1 GB de stockage",
+          },
+        },
+        professional: {
+          name: "Professionnel",
+          price: "79",
+          billingPeriod: "par mois",
+          description: "Pour les équipes en croissance",
+          cta: "Commencer l'Essai Gratuit",
+          features: {
+            feature1: "Projets illimités",
+            feature2: "Support prioritaire",
+            feature3: "100 GB de stockage",
+            feature4: "Analytique avancée",
+          },
+        },
+        enterprise: {
+          name: "Entreprise",
+          price: "Personnalisé",
+          billingPeriod: "nous contacter",
+          description: "Pour les grandes organisations",
+          cta: "Contacter les Ventes",
+          features: {
+            feature1: "Tout ce qui est en Professionnel",
+            feature2: "Support dédié",
+            feature3: "Stockage illimité",
+            feature4: "Intégrations personnalisées",
+            feature5: "Garantie SLA",
           },
         },
       },
