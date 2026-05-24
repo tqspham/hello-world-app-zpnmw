@@ -126,6 +126,55 @@ const translations: Record<Language, Record<string, any>> = {
         genericError: "An error occurred. Please try again.",
       },
     },
+    pricing: {
+      heading: "Simple, Transparent Pricing",
+      description:
+        "Choose the perfect plan for your needs. Always flexible to scale up or down.",
+      recommended: "Recommended",
+      featuresIncluded: "What's included:",
+      faq: "Have questions? Contact our sales team for custom enterprise solutions.",
+      plans: {
+        starter: {
+          name: "Starter",
+          price: "29",
+          billingPeriod: "per month",
+          description: "Perfect for getting started",
+          cta: "Get Started",
+          features: {
+            feature1: "Up to 10 projects",
+            feature2: "Basic support",
+            feature3: "1 GB storage",
+          },
+        },
+        professional: {
+          name: "Professional",
+          price: "79",
+          billingPeriod: "per month",
+          description: "For growing teams",
+          cta: "Start Free Trial",
+          features: {
+            feature1: "Unlimited projects",
+            feature2: "Priority support",
+            feature3: "100 GB storage",
+            feature4: "Advanced analytics",
+          },
+        },
+        enterprise: {
+          name: "Enterprise",
+          price: "Custom",
+          billingPeriod: "contact us",
+          description: "For large organizations",
+          cta: "Contact Sales",
+          features: {
+            feature1: "Everything in Professional",
+            feature2: "Dedicated support",
+            feature3: "Unlimited storage",
+            feature4: "Custom integrations",
+            feature5: "SLA guarantee",
+          },
+        },
+      },
+    },
   },
   vi: {
     nav: {
@@ -190,6 +239,55 @@ const translations: Record<Language, Record<string, any>> = {
         errorTitle: "Lỗi",
         errorMessage: "Không thể gửi tin nhắn. Vui lòng thử lại.",
         genericError: "Đã xảy ra lỗi. Vui lòng thử lại.",
+      },
+    },
+    pricing: {
+      heading: "Giá Cả Đơn Giản, Minh Bạch",
+      description:
+        "Chọn gói hoàn hảo cho nhu cầu của bạn. Luôn linh hoạt để tăng hoặc giảm quy mô.",
+      recommended: "Được Khuyến Nghị",
+      featuresIncluded: "Những gì được bao gồm:",
+      faq: "Có câu hỏi? Liên hệ với đội bán hàng của chúng tôi để biết giải pháp doanh nghiệp tùy chỉnh.",
+      plans: {
+        starter: {
+          name: "Khởi Đầu",
+          price: "29",
+          billingPeriod: "mỗi tháng",
+          description: "Hoàn hảo cho những người mới bắt đầu",
+          cta: "Bắt Đầu",
+          features: {
+            feature1: "Tối đa 10 dự án",
+            feature2: "Hỗ trợ cơ bản",
+            feature3: "1 GB lưu trữ",
+          },
+        },
+        professional: {
+          name: "Chuyên Nghiệp",
+          price: "79",
+          billingPeriod: "mỗi tháng",
+          description: "Cho các đội phát triển",
+          cta: "Bắt Đầu Dùng Thử Miễn Phí",
+          features: {
+            feature1: "Dự án không giới hạn",
+            feature2: "Hỗ trợ ưu tiên",
+            feature3: "100 GB lưu trữ",
+            feature4: "Phân tích nâng cao",
+          },
+        },
+        enterprise: {
+          name: "Doanh Nghiệp",
+          price: "Tùy Chỉnh",
+          billingPeriod: "liên hệ với chúng tôi",
+          description: "Cho các tổ chức lớn",
+          cta: "Liên Hệ Bộ Phận Bán Hàng",
+          features: {
+            feature1: "Mọi thứ trong Chuyên Nghiệp",
+            feature2: "Hỗ trợ dành riêng",
+            feature3: "Lưu trữ không giới hạn",
+            feature4: "Tích hợp tùy chỉnh",
+            feature5: "Đảm bảo SLA",
+          },
+        },
       },
     },
   },

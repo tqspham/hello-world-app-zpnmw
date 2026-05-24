@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
+import { FaXTwitter, FaLinkedin, FaGithub } from "react-icons/fa6";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -27,23 +29,23 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="#"
+                  href="#features"
                   className="text-(--color-primary) text-sm hover:text-(--color-secondary) transition-colors"
                 >
                   {t("footer.features")}
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/pricing"
                   className="text-(--color-primary) text-sm hover:text-(--color-secondary) transition-colors"
                 >
                   {t("footer.pricing")}
-                </a>
+                </Link>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#documentation"
                   className="text-(--color-primary) text-sm hover:text-(--color-secondary) transition-colors"
                 >
                   {t("footer.documentation")}
@@ -60,23 +62,23 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="#"
+                  href="#help"
                   className="text-(--color-primary) text-sm hover:text-(--color-secondary) transition-colors"
                 >
                   {t("footer.helpCenter")}
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/contact"
                   className="text-(--color-primary) text-sm hover:text-(--color-secondary) transition-colors"
                 >
                   {t("footer.contactUs")}
-                </a>
+                </Link>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#status"
                   className="text-(--color-primary) text-sm hover:text-(--color-secondary) transition-colors"
                 >
                   {t("footer.status")}
@@ -93,7 +95,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="#"
+                  href="#privacy"
                   className="text-(--color-primary) text-sm hover:text-(--color-secondary) transition-colors"
                 >
                   {t("footer.privacy")}
@@ -101,7 +103,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#terms"
                   className="text-(--color-primary) text-sm hover:text-(--color-secondary) transition-colors"
                 >
                   {t("footer.terms")}
@@ -109,7 +111,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#cookies"
                   className="text-(--color-primary) text-sm hover:text-(--color-secondary) transition-colors"
                 >
                   {t("footer.cookies")}
@@ -126,22 +128,25 @@ export default function Footer() {
           </p>
           <div className="flex gap-6 mt-6 sm:mt-0">
             <a
-              href="#"
-              className="text-(--color-secondary) text-sm hover:text-(--color-accent) transition-colors"
+              href="#twitter"
+              className="text-(--color-secondary) text-lg hover:text-(--color-accent) transition-colors"
+              aria-label="Twitter"
             >
-              {t("footer.twitter")}
+              <FaXTwitter size={20} />
             </a>
             <a
-              href="#"
-              className="text-(--color-secondary) text-sm hover:text-(--color-accent) transition-colors"
+              href="#linkedin"
+              className="text-(--color-secondary) text-lg hover:text-(--color-accent) transition-colors"
+              aria-label="LinkedIn"
             >
-              {t("footer.linkedin")}
+              <FaLinkedin size={20} />
             </a>
             <a
-              href="#"
-              className="text-(--color-secondary) text-sm hover:text-(--color-accent) transition-colors"
+              href="#github"
+              className="text-(--color-secondary) text-lg hover:text-(--color-accent) transition-colors"
+              aria-label="GitHub"
             >
-              {t("footer.github")}
+              <FaGithub size={20} />
             </a>
           </div>
         </div>

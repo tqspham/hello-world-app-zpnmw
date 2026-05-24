@@ -14,7 +14,7 @@ export default function Navigation() {
   const NAV_LINKS = [
     { href: "/", labelKey: "nav.home" },
     { href: "#features", labelKey: "nav.features" },
-    { href: "#pricing", labelKey: "nav.pricing" },
+    { href: "/pricing", labelKey: "nav.pricing" },
     { href: "#documentation", labelKey: "nav.documentation" },
     { href: "#help", labelKey: "nav.help" },
     { href: "/contact", labelKey: "nav.contact" },
