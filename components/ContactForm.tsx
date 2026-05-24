@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { AlertCircle, CheckCircle, Loader } from "lucide-react";
+import { useLanguage } from "@/lib/language-context";
 
 interface FormData {
   name: string;
@@ -18,6 +19,7 @@ interface ValidationErrors {
 }
 
 export default function ContactForm() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -37,10 +39,13 @@ export default function ContactForm() {
 
   const validateField = (name: string, value: string): string | undefined => {
     if (!value.trim()) {
-      return `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
+      if (name === "name") return t("contact.form.nameRequired");
+      if (name === "email") return t("contact.form.emailRequired");
+      if (name === "subject") return t("contact.form.subjectRequired");
+      if (name === "message") return t("contact.form.messageRequired");
     }
     if (name === "email" && !validateEmail(value)) {
-      return "Please enter a valid email address";
+      return t("contact.form.emailInvalid");
     }
     return undefined;
   };
@@ -63,7 +68,6 @@ export default function ContactForm() {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error for this field when user starts typing
     if (errors[name as keyof FormData]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -107,7 +111,9 @@ export default function ContactForm() {
 
       if (response.ok) {
         const data = await response.json();
-        setSuccessMessage(data.message || "Thank you for contacting us. We'll be in touch soon.");
+        setSuccessMessage(
+          data.message || t("contact.form.successMessage")
+        );
         setFormData({ name: "", email: "", subject: "", message: "" });
         setErrors({});
         if (liveRegionRef.current) {
@@ -115,10 +121,10 @@ export default function ContactForm() {
         }
       } else {
         const data = await response.json();
-        setErrorMessage(data.error || "Failed to send message. Please try again.");
+        setErrorMessage(data.error || t("contact.form.errorMessage"));
       }
     } catch (error) {
-      setErrorMessage("An error occurred. Please try again.");
+      setErrorMessage(t("contact.form.genericError"));
     } finally {
       setIsSubmitting(false);
     }
@@ -146,7 +152,9 @@ export default function ContactForm() {
             className="text-(--color-success) flex-shrink-0 mt-0.5"
           />
           <div>
-            <p className="text-(--color-primary) font-medium">Message Sent</p>
+            <p className="text-(--color-primary) font-medium">
+              {t("contact.form.successTitle")}
+            </p>
             <p className="text-(--color-muted-text) text-sm mt-1">
               {successMessage}
             </p>
@@ -162,7 +170,9 @@ export default function ContactForm() {
             className="text-(--color-danger) flex-shrink-0 mt-0.5"
           />
           <div>
-            <p className="text-(--color-primary) font-medium">Error</p>
+            <p className="text-(--color-primary) font-medium">
+              {t("contact.form.errorTitle")}
+            </p>
             <p className="text-(--color-muted-text) text-sm mt-1">
               {errorMessage}
             </p>
@@ -174,8 +184,11 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6" noValidate>
         {/* Name Field */}
         <div>
-          <label htmlFor="name" className="block text-(--color-primary) font-medium mb-2 transition-colors">
-            Name
+          <label
+            htmlFor="name"
+            className="block text-(--color-primary) font-medium mb-2 transition-colors"
+          >
+            {t("contact.form.nameLabel")}
           </label>
           <input
             id="name"
@@ -187,7 +200,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.name ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder="Your name"
+            placeholder={t("contact.form.namePlaceholder")}
             disabled={isSubmitting}
           />
           {errors.name && (
@@ -200,8 +213,11 @@ export default function ContactForm() {
 
         {/* Email Field */}
         <div>
-          <label htmlFor="email" className="block text-(--color-primary) font-medium mb-2 transition-colors">
-            Email
+          <label
+            htmlFor="email"
+            className="block text-(--color-primary) font-medium mb-2 transition-colors"
+          >
+            {t("contact.form.emailLabel")}
           </label>
           <input
             id="email"
@@ -213,7 +229,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.email ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder="your.email@example.com"
+            placeholder={t("contact.form.emailPlaceholder")}
             disabled={isSubmitting}
           />
           {errors.email && (
@@ -226,8 +242,11 @@ export default function ContactForm() {
 
         {/* Subject Field */}
         <div>
-          <label htmlFor="subject" className="block text-(--color-primary) font-medium mb-2 transition-colors">
-            Subject
+          <label
+            htmlFor="subject"
+            className="block text-(--color-primary) font-medium mb-2 transition-colors"
+          >
+            {t("contact.form.subjectLabel")}
           </label>
           <input
             id="subject"
@@ -239,7 +258,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.subject ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder="What is this about?"
+            placeholder={t("contact.form.subjectPlaceholder")}
             disabled={isSubmitting}
           />
           {errors.subject && (
@@ -252,8 +271,11 @@ export default function ContactForm() {
 
         {/* Message Field */}
         <div>
-          <label htmlFor="message" className="block text-(--color-primary) font-medium mb-2 transition-colors">
-            Message
+          <label
+            htmlFor="message"
+            className="block text-(--color-primary) font-medium mb-2 transition-colors"
+          >
+            {t("contact.form.messageLabel")}
           </label>
           <textarea
             id="message"
@@ -264,7 +286,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 resize-none ${
               errors.message ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder="Please tell us more..."
+            placeholder={t("contact.form.messagePlaceholder")}
             rows={6}
             disabled={isSubmitting}
           />
@@ -285,10 +307,10 @@ export default function ContactForm() {
           {isSubmitting ? (
             <>
               <Loader size={18} className="animate-spin" />
-              Sending...
+              {t("contact.form.sending")}
             </>
           ) : (
-            "Send Message"
+            t("contact.form.submitButton")
           )}
         </button>
       </form>
