@@ -16,7 +16,7 @@ export default function Navigation() {
     { href: "#features", labelKey: "nav.features" },
     { href: "/pricing", labelKey: "nav.pricing" },
     { href: "#documentation", labelKey: "nav.documentation" },
-    { href: "#help", labelKey: "nav.help" },
+    { href: "/help", labelKey: "nav.help" },
     { href: "/contact", labelKey: "nav.contact" },
   ];
 
