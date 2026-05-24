@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { AlertCircle, CheckCircle, Loader } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
-import { getTranslation } from "@/lib/translations";
+import { translations } from "@/lib/translations";
 
 interface FormData {
   name: string;
@@ -21,6 +21,7 @@ interface ValidationErrors {
 
 export default function ContactForm() {
   const { language } = useLanguage();
+  const t = translations[language];
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -40,11 +41,16 @@ export default function ContactForm() {
 
   const validateField = (name: string, value: string): string | undefined => {
     if (!value.trim()) {
-      const fieldName = getTranslation(language, `contact.form${name.charAt(0).toUpperCase() + name.slice(1)}`);
-      return `${fieldName} ${getTranslation(language, "contact.validationRequired")}`;
+      const fieldLabels: Record<string, string> = {
+        name: t.contactForm.nameLabel,
+        email: t.contactForm.emailLabel,
+        subject: t.contactForm.subjectLabel,
+        message: t.contactForm.messageLabel,
+      };
+      return `${fieldLabels[name]} ${t.contactForm.nameRequired.split(" ")[1]}`;
     }
     if (name === "email" && !validateEmail(value)) {
-      return getTranslation(language, "contact.validationEmail");
+      return t.contactForm.invalidEmail;
     }
     return undefined;
   };
@@ -109,20 +115,17 @@ export default function ContactForm() {
       });
 
       if (response.ok) {
-        const successMsg = getTranslation(language, "contact.successMessage");
-        setSuccessMessage(successMsg);
+        setSuccessMessage(t.contactForm.successMessage);
         setFormData({ name: "", email: "", subject: "", message: "" });
         setErrors({});
         if (liveRegionRef.current) {
           liveRegionRef.current.focus();
         }
       } else {
-        const errorMsg = getTranslation(language, "contact.errorMessage");
-        setErrorMessage(errorMsg);
+        setErrorMessage(t.contactForm.errorServer);
       }
     } catch (error) {
-      const errorMsg = getTranslation(language, "contact.errorMessage");
-      setErrorMessage(errorMsg);
+      setErrorMessage(t.contactForm.errorGeneral);
     } finally {
       setIsSubmitting(false);
     }
@@ -150,9 +153,7 @@ export default function ContactForm() {
             className="text-(--color-success) flex-shrink-0 mt-0.5"
           />
           <div>
-            <p className="text-(--color-primary) font-medium">
-              {getTranslation(language, "contact.successTitle")}
-            </p>
+            <p className="text-(--color-primary) font-medium">{t.contactForm.successTitle}</p>
             <p className="text-(--color-muted-text) text-sm mt-1">
               {successMessage}
             </p>
@@ -168,9 +169,7 @@ export default function ContactForm() {
             className="text-(--color-danger) flex-shrink-0 mt-0.5"
           />
           <div>
-            <p className="text-(--color-primary) font-medium">
-              {getTranslation(language, "contact.errorTitle")}
-            </p>
+            <p className="text-(--color-primary) font-medium">{t.contactForm.errorTitle}</p>
             <p className="text-(--color-muted-text) text-sm mt-1">
               {errorMessage}
             </p>
@@ -182,11 +181,8 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6" noValidate>
         {/* Name Field */}
         <div>
-          <label
-            htmlFor="name"
-            className="block text-(--color-primary) font-medium mb-2 transition-colors"
-          >
-            {getTranslation(language, "contact.formName")}
+          <label htmlFor="name" className="block text-(--color-primary) font-medium mb-2 transition-colors">
+            {t.contactForm.nameLabel}
           </label>
           <input
             id="name"
@@ -198,7 +194,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.name ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={getTranslation(language, "contact.formNamePlaceholder")}
+            placeholder={t.contactForm.namePlaceholder}
             disabled={isSubmitting}
           />
           {errors.name && (
@@ -211,11 +207,8 @@ export default function ContactForm() {
 
         {/* Email Field */}
         <div>
-          <label
-            htmlFor="email"
-            className="block text-(--color-primary) font-medium mb-2 transition-colors"
-          >
-            {getTranslation(language, "contact.formEmail")}
+          <label htmlFor="email" className="block text-(--color-primary) font-medium mb-2 transition-colors">
+            {t.contactForm.emailLabel}
           </label>
           <input
             id="email"
@@ -227,7 +220,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.email ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={getTranslation(language, "contact.formEmailPlaceholder")}
+            placeholder={t.contactForm.emailPlaceholder}
             disabled={isSubmitting}
           />
           {errors.email && (
@@ -240,11 +233,8 @@ export default function ContactForm() {
 
         {/* Subject Field */}
         <div>
-          <label
-            htmlFor="subject"
-            className="block text-(--color-primary) font-medium mb-2 transition-colors"
-          >
-            {getTranslation(language, "contact.formSubject")}
+          <label htmlFor="subject" className="block text-(--color-primary) font-medium mb-2 transition-colors">
+            {t.contactForm.subjectLabel}
           </label>
           <input
             id="subject"
@@ -256,7 +246,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.subject ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={getTranslation(language, "contact.formSubjectPlaceholder")}
+            placeholder={t.contactForm.subjectPlaceholder}
             disabled={isSubmitting}
           />
           {errors.subject && (
@@ -269,11 +259,8 @@ export default function ContactForm() {
 
         {/* Message Field */}
         <div>
-          <label
-            htmlFor="message"
-            className="block text-(--color-primary) font-medium mb-2 transition-colors"
-          >
-            {getTranslation(language, "contact.formMessage")}
+          <label htmlFor="message" className="block text-(--color-primary) font-medium mb-2 transition-colors">
+            {t.contactForm.messageLabel}
           </label>
           <textarea
             id="message"
@@ -284,7 +271,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 resize-none ${
               errors.message ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={getTranslation(language, "contact.formMessagePlaceholder")}
+            placeholder={t.contactForm.messagePlaceholder}
             rows={6}
             disabled={isSubmitting}
           />
@@ -305,10 +292,10 @@ export default function ContactForm() {
           {isSubmitting ? (
             <>
               <Loader size={18} className="animate-spin" />
-              {getTranslation(language, "contact.formSubmitSending")}
+              {t.contactForm.sendingButton}
             </>
           ) : (
-            getTranslation(language, "contact.formSubmit")
+            t.contactForm.submitButton
           )}
         </button>
       </form>

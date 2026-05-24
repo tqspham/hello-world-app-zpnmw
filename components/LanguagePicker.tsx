@@ -1,61 +1,91 @@
 "use client";
 
-import { Globe } from "lucide-react";
-import { useState } from "react";
 import { useLanguage } from "@/lib/language-context";
 import { translations } from "@/lib/translations";
+import { useState, useRef, useEffect } from "react";
+import { ChevronDown } from "lucide-react";
 
 export default function LanguagePicker() {
   const { language, setLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const currentLanguageLabel = language === "en" ? translations.en.language.english : translations.vi.language.vietnamese;
-  const languages: Array<{ code: "en" | "vi"; label: string }> = [
-    { code: "en", label: translations.en.language.english },
-    { code: "vi", label: translations.vi.language.vietnamese },
-  ];
+  const t = translations[language];
+  const languages: Array<keyof typeof translations> = ["en", "vi"];
 
-  const handleLanguageSelect = (lang: "en" | "vi") => {
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [isOpen]);
+
+  const handleLanguageSelect = (lang: keyof typeof translations) => {
     setLanguage(lang);
     setIsOpen(false);
   };
 
+  const getLanguageLabel = (lang: keyof typeof translations) => {
+    return lang === "en" ? t.language.english : t.language.vietnamese;
+  };
+
+  const currentLanguageLabel = getLanguageLabel(language);
+
   return (
     <div className="relative">
       <button
+        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 p-2 text-(--color-primary) hover:text-(--color-secondary) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded"
-        aria-label={`${translations.en.language.label}: ${currentLanguageLabel}`}
+        className="flex items-center gap-2 px-3 py-2 text-(--color-primary) hover:text-(--color-secondary) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded"
+        aria-label={`${t.language.label}: ${currentLanguageLabel}`}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <Globe size={20} />
-        <span className="text-sm font-medium hidden sm:inline">{currentLanguageLabel}</span>
+        <span className="text-sm font-medium">{currentLanguageLabel}</span>
+        <ChevronDown
+          size={16}
+          className={`transition-transform duration-200 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
       </button>
 
       {isOpen && (
         <div
-          className="absolute right-0 mt-2 w-40 bg-(--color-surface) border border-(--color-border) rounded-lg shadow-lg animate-in fade-in duration-150 z-50 transition-colors"
+          ref={dropdownRef}
+          className="absolute right-0 mt-2 w-40 bg-(--color-surface) border border-(--color-border) rounded-lg shadow-lg z-50 animate-in fade-in duration-150 transition-opacity"
           role="listbox"
-          aria-label={translations.en.language.label}
+          aria-label={t.language.label}
         >
-          <div className="py-2">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => handleLanguageSelect(lang.code)}
-                className={`w-full text-left px-4 py-3 text-sm transition-colors ${
-                  language === lang.code
-                    ? "bg-(--color-accent) text-(--color-surface) font-medium"
-                    : "text-(--color-primary) hover:bg-(--color-background)"
-                }`}
-                role="option"
-                aria-selected={language === lang.code}
-              >
-                {lang.label}
-              </button>
-            ))}
-          </div>
+          {languages.map((lang) => (
+            <button
+              key={lang}
+              onClick={() => handleLanguageSelect(lang)}
+              className={`w-full text-left px-4 py-3 text-sm transition-colors ${
+                language === lang
+                  ? "bg-(--color-accent) text-(--color-surface) font-medium"
+                  : "text-(--color-primary) hover:bg-(--color-secondary) hover:text-(--color-surface)"
+              } first:rounded-t-lg last:rounded-b-lg focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-inset`}
+              role="option"
+              aria-selected={language === lang}
+            >
+              {getLanguageLabel(lang)}
+            </button>
+          ))}
         </div>
       )}
     </div>
