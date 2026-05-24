@@ -1,7 +1,6 @@
-export const translations = {
+const translations = {
   en: {
-    // Navigation
-    nav: {
+    navigation: {
       home: 'Home',
       features: 'Features',
       pricing: 'Pricing',
@@ -9,54 +8,55 @@ export const translations = {
       help: 'Help Center',
       contact: 'Contact',
     },
-    // Home Page
+    theme: {
+      switchToDark: 'Switch to dark theme',
+      switchToLight: 'Switch to light theme',
+    },
+    language: {
+      label: 'Language',
+      english: 'English',
+      vietnamese: 'Tiếng Việt',
+    },
     home: {
       title: 'Hello World',
     },
-    // Contact Page
     contact: {
       pageTitle: 'Get in Touch',
-      pageDescription: 'We\'d love to hear from you. Send us a message and we\'ll respond as soon as we can.',
-    },
-    // Contact Form
-    contactForm: {
-      nameLabel: 'Name',
-      namePlaceholder: 'Your name',
-      emailLabel: 'Email',
-      emailPlaceholder: 'your.email@example.com',
-      subjectLabel: 'Subject',
-      subjectPlaceholder: 'What is this about?',
-      messageLabel: 'Message',
-      messagePlaceholder: 'Please tell us more...',
-      submitButton: 'Send Message',
-      sendingButton: 'Sending...',
-      nameRequired: 'Name is required',
-      emailRequired: 'Email is required',
-      subjectRequired: 'Subject is required',
-      messageRequired: 'Message is required',
-      invalidEmail: 'Please enter a valid email address',
+      pageDescription: "We'd love to hear from you. Send us a message and we'll respond as soon as we can.",
+      formName: 'Name',
+      formEmail: 'Email',
+      formSubject: 'Subject',
+      formMessage: 'Message',
+      formNamePlaceholder: 'Your name',
+      formEmailPlaceholder: 'your.email@example.com',
+      formSubjectPlaceholder: 'What is this about?',
+      formMessagePlaceholder: 'Please tell us more...',
+      formSubmit: 'Send Message',
+      formSending: 'Sending...',
+      validationRequired: 'is required',
+      validationEmail: 'Please enter a valid email address',
       successTitle: 'Message Sent',
-      successMessage: 'Thank you for contacting us. We\'ll be in touch soon.',
+      successMessage: "Thank you for contacting us. We'll be in touch soon.",
       errorTitle: 'Error',
-      errorGeneral: 'An error occurred while processing your request. Please try again.',
-      errorServer: 'Failed to send message. Please try again.',
+      errorDefault: 'An error occurred while processing your request. Please try again.',
+      errorInvalid: 'Invalid form data. Please check all fields and try again.',
+      errorNetwork: 'An error occurred. Please try again.',
     },
-    // Footer
     footer: {
       company: 'Company',
-      companyDesc: 'A clean, approachable interface with a warm, friendly tone that prioritizes clarity and simplicity.',
+      companyDescription: 'A clean, approachable interface with a warm, friendly tone that prioritizes clarity and simplicity.',
       product: 'Product',
-      productFeatures: 'Features',
-      productPricing: 'Pricing',
-      productDocs: 'Documentation',
+      features: 'Features',
+      pricing: 'Pricing',
+      documentation: 'Documentation',
       support: 'Support',
-      supportHelp: 'Help Center',
-      supportContact: 'Contact',
-      supportStatus: 'Status',
+      helpCenter: 'Help Center',
+      contact: 'Contact',
+      status: 'Status',
       legal: 'Legal',
-      legalPrivacy: 'Privacy Policy',
-      legalTerms: 'Terms of Service',
-      legalCookies: 'Cookies',
+      privacyPolicy: 'Privacy Policy',
+      termsOfService: 'Terms of Service',
+      cookies: 'Cookies',
       copyright: '© 2024 Hello World. All rights reserved.',
       social: {
         twitter: 'Twitter',
@@ -64,85 +64,81 @@ export const translations = {
         github: 'GitHub',
       },
     },
-    // Language picker
-    language: {
-      label: 'Language',
-      english: 'English',
-      vietnamese: 'Tiếng Việt',
-    },
   },
   vi: {
-    // Navigation
-    nav: {
+    navigation: {
       home: 'Trang chủ',
       features: 'Tính năng',
-      pricing: 'Giá',
+      pricing: 'Bảng giá',
       documentation: 'Tài liệu',
       help: 'Trung tâm trợ giúp',
       contact: 'Liên hệ',
     },
-    // Home Page
-    home: {
-      title: 'Xin chào Thế giới',
+    theme: {
+      switchToDark: 'Chuyển sang chế độ tối',
+      switchToLight: 'Chuyển sang chế độ sáng',
     },
-    // Contact Page
+    language: {
+      label: 'Ngôn ngữ',
+      english: 'English',
+      vietnamese: 'Tiếng Việt',
+    },
+    home: {
+      title: 'Hello World',
+    },
     contact: {
       pageTitle: 'Liên hệ với chúng tôi',
-      pageDescription: 'Chúng tôi rất muốn nghe từ bạn. Gửi cho chúng tôi một tin nhắn và chúng tôi sẽ phản hồi càng sớm càng tốt.',
-    },
-    // Contact Form
-    contactForm: {
-      nameLabel: 'Tên',
-      namePlaceholder: 'Tên của bạn',
-      emailLabel: 'Email',
-      emailPlaceholder: 'email.cua.ban@example.com',
-      subjectLabel: 'Chủ đề',
-      subjectPlaceholder: 'Đó là về cái gì?',
-      messageLabel: 'Tin nhắn',
-      messagePlaceholder: 'Vui lòng cho chúng tôi biết thêm...',
-      submitButton: 'Gửi tin nhắn',
-      sendingButton: 'Đang gửi...',
-      nameRequired: 'Tên là bắt buộc',
-      emailRequired: 'Email là bắt buộc',
-      subjectRequired: 'Chủ đề là bắt buộc',
-      messageRequired: 'Tin nhắn là bắt buộc',
-      invalidEmail: 'Vui lòng nhập một địa chỉ email hợp lệ',
-      successTitle: 'Tin nhắn đã được gửi',
-      successMessage: 'Cảm ơn bạn đã liên hệ với chúng tôi. Chúng tôi sẽ liên lạc với bạn sớm.',
+      pageDescription: 'Chúng tôi rất muốn nghe từ bạn. Gửi cho chúng tôi một tin nhắn và chúng tôi sẽ phản hồi sớm nhất có thể.',
+      formName: 'Tên',
+      formEmail: 'Email',
+      formSubject: 'Chủ đề',
+      formMessage: 'Tin nhắn',
+      formNamePlaceholder: 'Tên của bạn',
+      formEmailPlaceholder: 'email.cua.ban@example.com',
+      formSubjectPlaceholder: 'Cái gì về vấn đề này?',
+      formMessagePlaceholder: 'Vui lòng cho chúng tôi biết thêm...',
+      formSubmit: 'Gửi tin nhắn',
+      formSending: 'Đang gửi...',
+      validationRequired: 'là bắt buộc',
+      validationEmail: 'Vui lòng nhập địa chỉ email hợp lệ',
+      successTitle: 'Tin nhắn đã gửi',
+      successMessage: 'Cảm ơn bạn đã liên hệ với chúng tôi. Chúng tôi sẽ liên hệ lại sớm.',
       errorTitle: 'Lỗi',
-      errorGeneral: 'Đã xảy ra lỗi khi xử lý yêu cầu của bạn. Vui lòng thử lại.',
-      errorServer: 'Không thể gửi tin nhắn. Vui lòng thử lại.',
+      errorDefault: 'Đã xảy ra lỗi khi xử lý yêu cầu của bạn. Vui lòng thử lại.',
+      errorInvalid: 'Dữ liệu biểu mẫu không hợp lệ. Vui lòng kiểm tra tất cả các trường và thử lại.',
+      errorNetwork: 'Đã xảy ra lỗi. Vui lòng thử lại.',
     },
-    // Footer
     footer: {
       company: 'Công ty',
-      companyDesc: 'Một giao diện sạch sẽ, dễ tiếp cận với tính trang và thân thiện ưu tiên độ rõ ràng và đơn giản.',
+      companyDescription: 'Một giao diện sạch sẽ, thân thiện với tôn chỉ ấm áp và lời lẽ thân thiện ưu tiên sự rõ ràng và đơn giản.',
       product: 'Sản phẩm',
-      productFeatures: 'Tính năng',
-      productPricing: 'Giá',
-      productDocs: 'Tài liệu',
+      features: 'Tính năng',
+      pricing: 'Bảng giá',
+      documentation: 'Tài liệu',
       support: 'Hỗ trợ',
-      supportHelp: 'Trung tâm trợ giúp',
-      supportContact: 'Liên hệ',
-      supportStatus: 'Trạng thái',
+      helpCenter: 'Trung tâm trợ giúp',
+      contact: 'Liên hệ',
+      status: 'Trạng thái',
       legal: 'Pháp lý',
-      legalPrivacy: 'Chính sách bảo mật',
-      legalTerms: 'Điều khoản dịch vụ',
-      legalCookies: 'Cookie',
-      copyright: '© 2024 Hello World. Tất cả các quyền được bảo lưu.',
+      privacyPolicy: 'Chính sách bảo mật',
+      termsOfService: 'Điều khoản dịch vụ',
+      cookies: 'Cookie',
+      copyright: '© 2024 Hello World. Tất cả quyền được bảo lưu.',
       social: {
         twitter: 'Twitter',
         linkedin: 'LinkedIn',
         github: 'GitHub',
       },
     },
-    // Language picker
-    language: {
-      label: 'Ngôn ngữ',
-      english: 'English',
-      vietnamese: 'Tiếng Việt',
-    },
   },
-};
+} as const;
 
 export type Language = keyof typeof translations;
+
+export function getTranslation(language: Language) {
+  return translations[language];
+}
+
+export function isValidLanguage(lang: unknown): lang is Language {
+  return lang === 'en' || lang === 'vi';
+}

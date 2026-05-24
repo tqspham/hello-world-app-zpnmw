@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import type { Language } from "./translations";
+import { type Language, isValidLanguage } from "./translations";
 
 interface LanguageContextType {
   language: Language;
@@ -15,8 +15,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const storedLanguage = localStorage.getItem("language") as Language | null;
-    const initialLanguage = storedLanguage || "en";
+    const storedLanguage = localStorage.getItem("language");
+    const initialLanguage: Language = isValidLanguage(storedLanguage)
+      ? storedLanguage
+      : "en";
     setLanguageState(initialLanguage);
     setMounted(true);
   }, []);

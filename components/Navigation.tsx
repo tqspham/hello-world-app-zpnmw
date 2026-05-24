@@ -3,23 +3,23 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useLanguage } from "@/lib/language-context";
+import { getTranslation } from "@/lib/translations";
 import ThemeToggle from "./ThemeToggle";
 import LanguagePicker from "./LanguagePicker";
-import { useLanguage } from "@/lib/language-context";
-import { translations } from "@/lib/translations";
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { language } = useLanguage();
-  const t = translations[language];
+  const translations = getTranslation(language);
 
   const NAV_LINKS = [
-    { href: "/", label: t.nav.home },
-    { href: "#features", label: t.nav.features },
-    { href: "#pricing", label: t.nav.pricing },
-    { href: "#documentation", label: t.nav.documentation },
-    { href: "#help", label: t.nav.help },
-    { href: "/contact", label: t.nav.contact },
+    { href: "/", label: translations.navigation.home },
+    { href: "#features", label: translations.navigation.features },
+    { href: "#pricing", label: translations.navigation.pricing },
+    { href: "#documentation", label: translations.navigation.documentation },
+    { href: "#help", label: translations.navigation.help },
+    { href: "/contact", label: translations.navigation.contact },
   ];
 
   return (
@@ -51,8 +51,8 @@ export default function Navigation() {
 
             {/* Theme Toggle, Language Picker, and Mobile Menu Toggle */}
             <div className="flex items-center gap-4">
-              <LanguagePicker />
               <ThemeToggle />
+              <LanguagePicker />
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="md:hidden p-2 text-(--color-primary) hover:text-(--color-secondary) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 rounded"

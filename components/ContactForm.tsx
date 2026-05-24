@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { AlertCircle, CheckCircle, Loader } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
-import { translations } from "@/lib/translations";
+import { getTranslation } from "@/lib/translations";
 
 interface FormData {
   name: string;
@@ -21,7 +21,7 @@ interface ValidationErrors {
 
 export default function ContactForm() {
   const { language } = useLanguage();
-  const t = translations[language];
+  const translations = getTranslation(language);
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -41,16 +41,10 @@ export default function ContactForm() {
 
   const validateField = (name: string, value: string): string | undefined => {
     if (!value.trim()) {
-      const fieldLabels: Record<string, string> = {
-        name: t.contactForm.nameLabel,
-        email: t.contactForm.emailLabel,
-        subject: t.contactForm.subjectLabel,
-        message: t.contactForm.messageLabel,
-      };
-      return `${fieldLabels[name]} ${t.contactForm.nameRequired.split(" ")[1]}`;
+      return `${name.charAt(0).toUpperCase() + name.slice(1)} ${translations.contact.validationRequired}`;
     }
     if (name === "email" && !validateEmail(value)) {
-      return t.contactForm.invalidEmail;
+      return translations.contact.validationEmail;
     }
     return undefined;
   };
@@ -73,6 +67,7 @@ export default function ContactForm() {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error for this field when user starts typing
     if (errors[name as keyof FormData]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -115,17 +110,23 @@ export default function ContactForm() {
       });
 
       if (response.ok) {
-        setSuccessMessage(t.contactForm.successMessage);
+        const data = await response.json();
+        setSuccessMessage(
+          data.message || translations.contact.successMessage
+        );
         setFormData({ name: "", email: "", subject: "", message: "" });
         setErrors({});
         if (liveRegionRef.current) {
           liveRegionRef.current.focus();
         }
       } else {
-        setErrorMessage(t.contactForm.errorServer);
+        const data = await response.json();
+        setErrorMessage(
+          data.error || translations.contact.errorDefault
+        );
       }
     } catch (error) {
-      setErrorMessage(t.contactForm.errorGeneral);
+      setErrorMessage(translations.contact.errorNetwork);
     } finally {
       setIsSubmitting(false);
     }
@@ -153,7 +154,9 @@ export default function ContactForm() {
             className="text-(--color-success) flex-shrink-0 mt-0.5"
           />
           <div>
-            <p className="text-(--color-primary) font-medium">{t.contactForm.successTitle}</p>
+            <p className="text-(--color-primary) font-medium">
+              {translations.contact.successTitle}
+            </p>
             <p className="text-(--color-muted-text) text-sm mt-1">
               {successMessage}
             </p>
@@ -169,7 +172,9 @@ export default function ContactForm() {
             className="text-(--color-danger) flex-shrink-0 mt-0.5"
           />
           <div>
-            <p className="text-(--color-primary) font-medium">{t.contactForm.errorTitle}</p>
+            <p className="text-(--color-primary) font-medium">
+              {translations.contact.errorTitle}
+            </p>
             <p className="text-(--color-muted-text) text-sm mt-1">
               {errorMessage}
             </p>
@@ -181,8 +186,11 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6" noValidate>
         {/* Name Field */}
         <div>
-          <label htmlFor="name" className="block text-(--color-primary) font-medium mb-2 transition-colors">
-            {t.contactForm.nameLabel}
+          <label
+            htmlFor="name"
+            className="block text-(--color-primary) font-medium mb-2 transition-colors"
+          >
+            {translations.contact.formName}
           </label>
           <input
             id="name"
@@ -194,7 +202,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.name ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={t.contactForm.namePlaceholder}
+            placeholder={translations.contact.formNamePlaceholder}
             disabled={isSubmitting}
           />
           {errors.name && (
@@ -207,8 +215,11 @@ export default function ContactForm() {
 
         {/* Email Field */}
         <div>
-          <label htmlFor="email" className="block text-(--color-primary) font-medium mb-2 transition-colors">
-            {t.contactForm.emailLabel}
+          <label
+            htmlFor="email"
+            className="block text-(--color-primary) font-medium mb-2 transition-colors"
+          >
+            {translations.contact.formEmail}
           </label>
           <input
             id="email"
@@ -220,7 +231,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.email ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={t.contactForm.emailPlaceholder}
+            placeholder={translations.contact.formEmailPlaceholder}
             disabled={isSubmitting}
           />
           {errors.email && (
@@ -233,8 +244,11 @@ export default function ContactForm() {
 
         {/* Subject Field */}
         <div>
-          <label htmlFor="subject" className="block text-(--color-primary) font-medium mb-2 transition-colors">
-            {t.contactForm.subjectLabel}
+          <label
+            htmlFor="subject"
+            className="block text-(--color-primary) font-medium mb-2 transition-colors"
+          >
+            {translations.contact.formSubject}
           </label>
           <input
             id="subject"
@@ -246,7 +260,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 ${
               errors.subject ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={t.contactForm.subjectPlaceholder}
+            placeholder={translations.contact.formSubjectPlaceholder}
             disabled={isSubmitting}
           />
           {errors.subject && (
@@ -259,8 +273,11 @@ export default function ContactForm() {
 
         {/* Message Field */}
         <div>
-          <label htmlFor="message" className="block text-(--color-primary) font-medium mb-2 transition-colors">
-            {t.contactForm.messageLabel}
+          <label
+            htmlFor="message"
+            className="block text-(--color-primary) font-medium mb-2 transition-colors"
+          >
+            {translations.contact.formMessage}
           </label>
           <textarea
             id="message"
@@ -271,7 +288,7 @@ export default function ContactForm() {
             className={`w-full px-4 py-3 border rounded-lg bg-(--color-surface) text-(--color-text) transition-colors focus:outline-none focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 resize-none ${
               errors.message ? "border-(--color-danger)" : "border-(--color-border)"
             }`}
-            placeholder={t.contactForm.messagePlaceholder}
+            placeholder={translations.contact.formMessagePlaceholder}
             rows={6}
             disabled={isSubmitting}
           />
@@ -292,10 +309,10 @@ export default function ContactForm() {
           {isSubmitting ? (
             <>
               <Loader size={18} className="animate-spin" />
-              {t.contactForm.sendingButton}
+              {translations.contact.formSending}
             </>
           ) : (
-            t.contactForm.submitButton
+            translations.contact.formSubmit
           )}
         </button>
       </form>
